@@ -1,1 +1,24 @@
-@import 'bootstrap'
+@import 'bootstrap';
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.bar {
+    height: 70px;
+    width: 100%;
+    background-color: rgb(0, 110, 255);
+}
+
+.card {
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-img-top {
+    object-fit: cover;
+    height: 180px;
+}
