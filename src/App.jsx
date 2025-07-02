@@ -1,17 +1,20 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 
 function App() {
   const [politicians, setPoliticians] = useState([])
   const [filter, setFilter] = useState("name")
   const [searchQuery, setSearchQuery] = useState("")
 
-  const filteredPoliticians = politicians.filter(p => {
-    if (filter === "name") {
-      return p.name.toLowerCase().includes(searchQuery.toLowerCase())
-    } else if (filter === "bio") {
-      return p.biography.toLowerCase().includes(searchQuery.toLowerCase())
-    }
-  })
+  const filteredPoliticians = useMemo(() => {
+    if (!searchQuery) return politicians
+    return politicians.filter(p => {
+      if (filter === "name") {
+        return p.name.toLowerCase().includes(searchQuery.toLowerCase())
+      } else if (filter === "bio") {
+        return p.biography.toLowerCase().includes(searchQuery.toLowerCase())
+      }
+    })
+  }, [politicians, filter, searchQuery])
 
   useEffect(() => {
     async function loadPoliticians() {
