@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect, useMemo, memo } from "react"
 
 function App() {
   const [politicians, setPoliticians] = useState([])
@@ -25,6 +25,20 @@ function App() {
     loadPoliticians()
   }, [])
 
+  const Card = memo(function Card({ p }) {
+    console.log(`Card: ${p.name}`)
+    return (
+      <div className="card h-100 w-100">
+        <img className="card-img-top" src={p.image} alt="Politician" />
+        <div className="card-body d-flex flex-column">
+          <h4 className="card-title">{p.name}</h4>
+          <h5 className="card-subtitle">{p.position}</h5>
+          <p className="card-text">{p.biography}</p>
+        </div>
+      </div>
+    )
+  })
+
   return (
     <>
       <header className="bar d-flex align-items-center justify-content-center">
@@ -43,14 +57,7 @@ function App() {
               filteredPoliticians.map(p => {
                 return (
                   <div className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex" key={p.id}>
-                    <div className="card h-100 w-100">
-                      <img className="card-img-top" src={p.image} alt="Politician" />
-                      <div className="card-body d-flex flex-column">
-                        <h4 className="card-title">{p.name}</h4>
-                        <h5 className="card-subtitle">{p.position}</h5>
-                        <p className="card-text">{p.biography}</p>
-                      </div>
-                    </div>
+                    <Card p={p} />
                   </div>
 
                 )
