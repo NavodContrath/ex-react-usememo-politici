@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, memo } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 
 function App() {
   const [politicians, setPoliticians] = useState([])
@@ -25,14 +25,14 @@ function App() {
     loadPoliticians()
   }, [])
 
-  const Card = memo(function Card({ p }) {
-    console.log(`Card: ${p.name}`)
+  const Card = React.memo(({ p }) => {
+    console.log(`Card`)
     return (
       <div className="card h-100 w-100">
         <img className="card-img-top" src={p.image} alt="Politician" />
         <div className="card-body d-flex flex-column">
           <h4 className="card-title">{p.name}</h4>
-          <h5 className="card-subtitle">{p.position}</h5>
+          <h5 className="card-subtitle text-primary">{p.position}</h5>
           <p className="card-text">{p.biography}</p>
         </div>
       </div>
