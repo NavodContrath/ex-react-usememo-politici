@@ -2,6 +2,16 @@ import { useState, useEffect } from "react"
 
 function App() {
   const [politicians, setPoliticians] = useState([])
+  const [filter, setFilter] = useState("name")
+  const [searchQuery, setSearchQuery] = useState("")
+
+  const filteredPoliticians = politicians.filter(p => {
+    if (filter === "name") {
+      return p.name.toLowerCase().includes(searchQuery.toLowerCase())
+    } else if (filter === "bio") {
+      return p.biography.toLowerCase().includes(searchQuery.toLowerCase())
+    }
+  })
 
   useEffect(() => {
     async function loadPoliticians() {
@@ -14,13 +24,20 @@ function App() {
 
   return (
     <>
-      <header className="bar"></header>
+      <header className="bar d-flex align-items-center justify-content-center">
+        <input type="text" name="serach-politician" id="search-bar" value={searchQuery} onChange={(e) => { setSearchQuery(e.target.value) }} />
+        <button type="button">Search</button>
+        <select name="filter" id="serach-filter" onChange={(e) => { setFilter(e.target.value) }}>
+          <option value="name">Name</option>
+          <option value="bio">Bio</option>
+        </select>
+      </header>
       <main>
         <div className="container">
           <h1>Politicians</h1>
           <div className="row">
             {
-              politicians.map(p => {
+              filteredPoliticians.map(p => {
                 return (
                   <div className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex" key={p.id}>
                     <div className="card h-100 w-100">
